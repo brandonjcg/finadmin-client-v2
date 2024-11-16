@@ -1,12 +1,12 @@
-// 'use client';
+'use client';
 
-import { inter } from '@/fonts';
-// import { useUIStore } from '@/store';
 import Link from 'next/link';
 import { IoSearchOutline } from 'react-icons/io5';
+import { inter } from '@/fonts';
+import { useUIStore } from '@/store';
 
 export const TopMenu = () => {
-  // const openSidebarMenu = useUIStore((state) => state.openSidebarMenu);
+  const openSidebarMenu = useUIStore((state) => state.openSidebarMenu);
 
   return (
     <nav className="flex px-5 justify-between items-center w-full">
@@ -50,7 +50,7 @@ export const TopMenu = () => {
         </Link>
 
         <button
-          // onClick={openSidebarMenu}
+          onClick={openSidebarMenu}
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
         >
           Menu

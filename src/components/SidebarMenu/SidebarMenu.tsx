@@ -3,24 +3,19 @@
 import {
   IoCloseOutline,
   IoLogInOutline,
-  IoLogOutOutline,
-  IoPeopleOutline,
+  IoWalletOutline,
   IoPersonOutline,
   IoSearchOutline,
-  IoShirtOutline,
-  IoTicketOutline,
+  IoStatsChartOutline,
+  IoCashOutline,
 } from 'react-icons/io5';
 import clsx from 'clsx';
-
+import { useUIStore } from '@/store';
 import { SidebarMenuItem } from './SidebarMenuItem';
-// import { useUIStore } from '@/store';
 
 export const SidebarMenu = () => {
-  // const isSidebarMenuOpen = useUIStore((state) => state.isSidebarMenuOpen);
-  // const closeSidebarMenu = useUIStore((state) => state.closeSidebarMenu);
-
-  const isSidebarMenuOpen = false;
-  const closeSidebarMenu = () => {};
+  const isSidebarMenuOpen = useUIStore((state) => state.isSidebarMenuOpen);
+  const closeSidebarMenu = useUIStore((state) => state.closeSidebarMenu);
 
   return (
     <div>
@@ -36,7 +31,7 @@ export const SidebarMenu = () => {
 
       <nav
         className={clsx(
-          'fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300',
+          'fixed p-5 right-0 top-0 w-full md:w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300 overflow-y-auto',
           {
             'translate-x-full': !isSidebarMenuOpen,
           },
@@ -58,15 +53,19 @@ export const SidebarMenu = () => {
         </div>
 
         <SidebarMenuItem title="Profile" icon={<IoPersonOutline size={30} />} />
-        <SidebarMenuItem title="Orders" icon={<IoTicketOutline size={30} />} />
         <SidebarMenuItem title="Login" icon={<IoLogInOutline size={30} />} />
-        <SidebarMenuItem title="Logout" icon={<IoLogOutOutline size={30} />} />
 
         <div className="w-full h-px bg-gray-200 my-10" />
 
-        <SidebarMenuItem title="Products" icon={<IoShirtOutline size={30} />} />
-        <SidebarMenuItem title="Orders" icon={<IoTicketOutline size={30} />} />
-        <SidebarMenuItem title="Users" icon={<IoPeopleOutline size={30} />} />
+        <SidebarMenuItem
+          title="Dashboard"
+          icon={<IoStatsChartOutline size={30} />}
+        />
+        <SidebarMenuItem
+          title="Transactions"
+          icon={<IoWalletOutline size={30} />}
+        />
+        <SidebarMenuItem title="Totals" icon={<IoCashOutline size={30} />} />
       </nav>
     </div>
   );
