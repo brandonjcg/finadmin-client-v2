@@ -2,10 +2,10 @@
 
 import { IResponseApi } from '@/interfaces';
 import { API_SERVER_URL, TEMPORAL_TOKEN } from '@/config';
+import { buildError, ICustomError } from '@/utils';
 
 interface Props {
   url: string;
-
   cache?: RequestCache;
 }
 
@@ -30,7 +30,7 @@ export const getData = async <T>({
       error: true,
       statusCode: 500,
       path: url,
-      message: (error as Error).message,
+      message: buildError(error as ICustomError),
       data: [],
       info: {
         total: 0,

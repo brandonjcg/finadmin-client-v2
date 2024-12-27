@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "app",
         "layout",
-        "components"
+        "components",
+        "utils"
     ]
 }
