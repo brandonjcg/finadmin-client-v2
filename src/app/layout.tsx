@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { inter } from '@/fonts';
 
 import './globals.css';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'FinAdmin',
@@ -15,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <Suspense>
+        <body className={`${inter.className} antialiased`}>{children}</body>
+      </Suspense>
     </html>
   );
 }
