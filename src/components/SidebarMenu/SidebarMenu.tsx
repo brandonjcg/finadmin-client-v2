@@ -20,7 +20,7 @@ export const SidebarMenu = () => {
   return (
     <div>
       {isSidebarMenuOpen && (
-        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-20" />
+        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-gray-700 opacity-20" />
       )}
       {isSidebarMenuOpen && (
         <div
@@ -31,7 +31,7 @@ export const SidebarMenu = () => {
 
       <nav
         className={clsx(
-          'fixed p-5 right-0 top-0 w-full md:w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300 overflow-y-auto',
+          'fixed p-5 right-0 top-0 w-full md:w-[500px] h-screen z-20 shadow-2xl transform transition-all duration-300 overflow-y-auto',
           {
             'translate-x-full': !isSidebarMenuOpen,
           },
@@ -48,7 +48,7 @@ export const SidebarMenu = () => {
           <input
             type="text"
             placeholder="Search"
-            className="w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-xl border-gray-200 focus:outline-none focus:border-blue-500"
+            className="w-full bg-gray-400 rounded pl-10 py-1 pr-10 border-b-2 text-xl border-gray-200 focus:outline-none focus:border-blue-500"
           />
         </div>
 
