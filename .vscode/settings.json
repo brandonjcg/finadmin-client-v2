@@ -3,6 +3,9 @@
         "app",
         "layout",
         "components",
-        "utils"
+        "utils",
+        "interfaces",
+        "forms",
+        "modules"
     ]
 }

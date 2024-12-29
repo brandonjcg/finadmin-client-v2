@@ -15,3 +15,9 @@ export interface IResponseApi<T> {
   data: T[];
   info: IInfo;
 }
+
+export interface IOption {
+  _id: string;
+  text: string;
+  logo?: string;
+}
