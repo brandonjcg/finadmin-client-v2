@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import {
   ColumnDef,
   getCoreRowModel,
@@ -18,14 +18,33 @@ import { IInfo } from '@/interfaces';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
+  endpoint: string;
 }
+
+const getFilterParams = (searchParams: ReadonlyURLSearchParams) => {
+  const filterParams: Record<string, string> = {};
+
+  searchParams.forEach((value, key) => {
+    if (key.startsWith('filters[') && key.endsWith(']')) {
+      filterParams[key] = value;
+    }
+  });
+
+  return filterParams;
+};
 
 export function DataTable<TData, TValue>({
   columns,
+  endpoint,
 }: DataTableProps<TData, TValue>) {
   const searchParams = useSearchParams();
   const pageParam = Number(searchParams?.get('page')) || 1;
   const totalPagesParam = Number(searchParams?.get('total')) || 10;
+
+  const filterParams = useMemo(
+    () => getFilterParams(searchParams),
+    [searchParams],
+  );
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [page, setPage] = useState(pageParam);
@@ -33,7 +52,6 @@ export function DataTable<TData, TValue>({
   const [info, setInfo] = useState<IInfo>({
     total: totalPagesParam,
   });
-  const [loading, setLoading] = useState(false);
 
   const { total, totalPages = 10 } = info;
 
@@ -50,15 +68,20 @@ export function DataTable<TData, TValue>({
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      const fullUrl = `transaction?page=${page}&filters[isPaid]=false&limit=${totalPagesParam}`;
+      const queryString = new URLSearchParams({
+        page: page.toString(),
+        limit: totalPagesParam.toString(),
+        ...filterParams,
+      }).toString();
+
+      const fullUrl = `${endpoint}?${queryString}`;
       const response = await getData<TData>({ url: fullUrl });
       setData(response.data);
       setInfo(response.info);
-      setLoading(false);
     };
+
     fetchData();
-  }, [page, totalPagesParam]);
+  }, [endpoint, filterParams, page, totalPagesParam]);
 
   return (
     <div className="overflow-x-auto">
@@ -69,13 +92,7 @@ export function DataTable<TData, TValue>({
           ))}
         </thead>
         <tbody className="divide-y divide-gray-700 border-t border-gray-700">
-          {loading ? (
-            <tr>
-              <td colSpan={columns.length} className="text-center p-4">
-                Loading...
-              </td>
-            </tr>
-          ) : table.getRowModel().rows?.length ? (
+          {table.getRowModel().rows?.length ? (
             table
               .getRowModel()
               .rows.map((row) => <TableRow key={row.id} row={row} />)
