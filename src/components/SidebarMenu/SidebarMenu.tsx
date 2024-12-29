@@ -73,6 +73,7 @@ export const SidebarMenu = () => {
         <SidebarMenuItem
           title="Transactions"
           icon={<IoWalletOutline size={30} />}
+          path="/transaction"
           onClick={closeSidebarMenu}
         />
         <SidebarMenuItem
