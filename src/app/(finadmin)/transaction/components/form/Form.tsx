@@ -1,13 +1,17 @@
 'use client';
 
 import { toast } from 'react-toastify';
-import { useForm } from '@tanstack/react-form';
+import { standardSchemaValidator, useForm } from '@tanstack/react-form';
 import { createRow } from '@/actions';
+import { transactionSchema } from '@/schemas';
+import { FieldInfo } from '../validators';
+import { useRouter } from 'next/navigation';
 
 export const Form = () => {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
-      bank: '62f16a303027606140641239',
+      bank: '',
       concept: '',
       store: '',
       amount: 0,
@@ -21,9 +25,16 @@ export const Form = () => {
         url: 'transaction',
         body,
       });
-      if (response.error) response.message.forEach((message) => toast(message));
+      if (response.error)
+        return response.message.forEach((message) => toast.error(message));
 
-      // TODO: Redirect to transactions list
+      toast.success(response.message);
+
+      router.push('/transaction');
+    },
+    validatorAdapter: standardSchemaValidator(),
+    validators: {
+      onChange: transactionSchema,
     },
   });
 
@@ -38,175 +49,190 @@ export const Form = () => {
       >
         <div className="mb-5 space-y-4">
           <form.Field name="bank">
-            {(fieldProps) => (
+            {(field) => (
               <div className="space-y-2">
                 <label
-                  htmlFor={fieldProps.name}
+                  htmlFor={field.name}
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Bank
                 </label>
                 <input
-                  name={fieldProps.name}
-                  value={fieldProps.state.value}
-                  onBlur={fieldProps.handleBlur}
-                  onChange={(e) => fieldProps.handleChange(e.target.value)}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
+                <FieldInfo field={field} />
               </div>
             )}
           </form.Field>
 
           <form.Field name="concept">
-            {(fieldProps) => (
+            {(field) => (
               <div className="space-y-2">
                 <label
-                  htmlFor={fieldProps.name}
+                  htmlFor={field.name}
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Concept
                 </label>
                 <input
-                  name={fieldProps.name}
-                  value={fieldProps.state.value}
-                  onBlur={fieldProps.handleBlur}
-                  onChange={(e) => fieldProps.handleChange(e.target.value)}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
+                <FieldInfo field={field} />
               </div>
             )}
           </form.Field>
 
           <form.Field name="store">
-            {(fieldProps) => (
+            {(field) => (
               <div className="space-y-2">
                 <label
-                  htmlFor={fieldProps.name}
+                  htmlFor={field.name}
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Store
                 </label>
                 <input
-                  name={fieldProps.name}
-                  value={fieldProps.state.value}
-                  onBlur={fieldProps.handleBlur}
-                  onChange={(e) => fieldProps.handleChange(e.target.value)}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
+                <FieldInfo field={field} />
               </div>
             )}
           </form.Field>
 
           <form.Field name="amount">
-            {(fieldProps) => (
+            {(field) => (
               <div className="space-y-2">
                 <label
-                  htmlFor={fieldProps.name}
+                  htmlFor={field.name}
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Amount
                 </label>
                 <input
                   type="number"
-                  name={fieldProps.name}
-                  value={fieldProps.state.value}
-                  onBlur={fieldProps.handleBlur}
-                  onChange={(e) => fieldProps.handleChange(+e.target.value)}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(+e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
+                <FieldInfo field={field} />
               </div>
             )}
           </form.Field>
 
           <form.Field name="date">
-            {(fieldProps) => (
+            {(field) => (
               <div className="space-y-2">
                 <label
-                  htmlFor={fieldProps.name}
+                  htmlFor={field.name}
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Date
                 </label>
                 <input
                   type="date"
-                  name={fieldProps.name}
-                  value={fieldProps.state.value}
-                  onBlur={fieldProps.handleBlur}
-                  onChange={(e) => fieldProps.handleChange(e.target.value)}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
+                <FieldInfo field={field} />
               </div>
             )}
           </form.Field>
 
           <form.Field name="isReserved">
-            {(fieldProps) => (
+            {(field) => (
               <div className="space-y-2">
                 <label
-                  htmlFor={fieldProps.name}
+                  htmlFor={field.name}
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Reserved
                 </label>
                 <input
                   type="checkbox"
-                  name={fieldProps.name}
-                  checked={fieldProps.state.value}
-                  onBlur={fieldProps.handleBlur}
-                  onChange={(e) => fieldProps.handleChange(e.target.checked)}
+                  name={field.name}
+                  checked={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.checked)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
+                <FieldInfo field={field} />
               </div>
             )}
           </form.Field>
 
           <form.Field name="isPaid">
-            {(fieldProps) => (
+            {(field) => (
               <div className="space-y-2">
                 <label
-                  htmlFor={fieldProps.name}
+                  htmlFor={field.name}
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Paid
                 </label>
                 <input
                   type="checkbox"
-                  name={fieldProps.name}
-                  checked={fieldProps.state.value}
-                  onBlur={fieldProps.handleBlur}
-                  onChange={(e) => fieldProps.handleChange(e.target.checked)}
+                  name={field.name}
+                  checked={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.checked)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
+                <FieldInfo field={field} />
               </div>
             )}
           </form.Field>
 
           <form.Field name="additionalComments">
-            {(fieldProps) => (
+            {(field) => (
               <div className="space-y-2">
                 <label
-                  htmlFor={fieldProps.name}
+                  htmlFor={field.name}
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Additional Comments
                 </label>
                 <textarea
-                  name={fieldProps.name}
-                  value={fieldProps.state.value}
-                  onBlur={fieldProps.handleBlur}
-                  onChange={(e) => fieldProps.handleChange(e.target.value)}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
+                <FieldInfo field={field} />
               </div>
             )}
           </form.Field>
         </div>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800"
+        <form.Subscribe
+          selector={(state) => [state.canSubmit, state.isSubmitting]}
         >
-          Submit
-        </button>
+          {([canSubmit, isSubmitting]) => (
+            <button
+              type="submit"
+              disabled={!canSubmit}
+              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800"
+            >
+              {isSubmitting ? '...' : 'Submit'}
+            </button>
+          )}
+        </form.Subscribe>
       </form>
     </div>
   );
