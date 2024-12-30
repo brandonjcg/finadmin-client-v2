@@ -6,6 +6,7 @@
         "utils",
         "interfaces",
         "forms",
-        "modules"
+        "modules",
+        "pages"
     ]
 }

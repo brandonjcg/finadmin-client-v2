@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ToastContainer } from 'react-toastify';
 import { inter } from '@/fonts';
 
 import './globals.css';
@@ -17,7 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Suspense>
-        <body className={`${inter.className} antialiased`}>{children}</body>
+        <body className={`${inter.className} antialiased`}>
+          <ToastContainer theme="dark" />
+          {children}
+        </body>
       </Suspense>
     </html>
   );

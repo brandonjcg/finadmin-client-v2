@@ -1,11 +1,13 @@
 'use client';
 
+import { toast } from 'react-toastify';
 import { useForm } from '@tanstack/react-form';
+import { createRow } from '@/actions';
 
 export const Form = () => {
   const form = useForm({
     defaultValues: {
-      bank: '',
+      bank: '62f16a303027606140641239',
       concept: '',
       store: '',
       amount: 0,
@@ -14,8 +16,14 @@ export const Form = () => {
       isPaid: false,
       additionalComments: '',
     },
-    onSubmit: async ({ value }) => {
-      console.log(value);
+    onSubmit: async ({ value: body }) => {
+      const response = await createRow({
+        url: 'transaction',
+        body,
+      });
+      if (response.error) response.message.forEach((message) => toast(message));
+
+      // TODO: Redirect to transactions list
     },
   });
 
