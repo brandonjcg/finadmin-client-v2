@@ -1,11 +1,13 @@
 'use client';
 
-import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 import { standardSchemaValidator, useForm } from '@tanstack/react-form';
+import { toast } from 'react-toastify';
 import { createRow } from '@/actions';
 import { transactionSchema } from '@/schemas';
 import { FieldInfo } from '../validators';
-import { useRouter } from 'next/navigation';
+import { FormLabel } from './FormLabel';
+import { FormInput, FormInputArea } from './FormInputs';
 
 export const Form = () => {
   const router = useRouter();
@@ -51,18 +53,12 @@ export const Form = () => {
           <form.Field name="bank">
             {(field) => (
               <div className="space-y-2">
-                <label
-                  htmlFor={field.name}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Bank
-                </label>
-                <input
+                <FormLabel name={field.name} label="Bank" />
+                <FormInput
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  onChangeString={field.handleChange}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -72,18 +68,12 @@ export const Form = () => {
           <form.Field name="concept">
             {(field) => (
               <div className="space-y-2">
-                <label
-                  htmlFor={field.name}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Concept
-                </label>
-                <input
+                <FormLabel name={field.name} label="Concept" />
+                <FormInput
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  onChangeString={field.handleChange}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -93,18 +83,12 @@ export const Form = () => {
           <form.Field name="store">
             {(field) => (
               <div className="space-y-2">
-                <label
-                  htmlFor={field.name}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Store
-                </label>
-                <input
+                <FormLabel name={field.name} label="Store" />
+                <FormInput
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  onChangeString={field.handleChange}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -114,19 +98,13 @@ export const Form = () => {
           <form.Field name="amount">
             {(field) => (
               <div className="space-y-2">
-                <label
-                  htmlFor={field.name}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Amount
-                </label>
-                <input
+                <FormLabel name={field.name} label="Amount" />
+                <FormInput
                   type="number"
                   name={field.name}
-                  value={field.state.value}
+                  value={+field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(+e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  onChangeNumber={field.handleChange}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -136,19 +114,12 @@ export const Form = () => {
           <form.Field name="date">
             {(field) => (
               <div className="space-y-2">
-                <label
-                  htmlFor={field.name}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Date
-                </label>
-                <input
-                  type="date"
+                <FormLabel name={field.name} label="Date" />
+                <FormInput
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  onChangeString={field.handleChange}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -158,19 +129,13 @@ export const Form = () => {
           <form.Field name="isReserved">
             {(field) => (
               <div className="space-y-2">
-                <label
-                  htmlFor={field.name}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Reserved
-                </label>
-                <input
+                <FormLabel name={field.name} label="Is reserved?" />
+                <FormInput
                   type="checkbox"
                   name={field.name}
                   checked={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.checked)}
-                  className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  onChangeBoolean={field.handleChange}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -180,19 +145,13 @@ export const Form = () => {
           <form.Field name="isPaid">
             {(field) => (
               <div className="space-y-2">
-                <label
-                  htmlFor={field.name}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Paid
-                </label>
-                <input
+                <FormLabel name={field.name} label="Is pais?" />
+                <FormInput
                   type="checkbox"
                   name={field.name}
                   checked={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.checked)}
-                  className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  onChangeBoolean={field.handleChange}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -202,18 +161,12 @@ export const Form = () => {
           <form.Field name="additionalComments">
             {(field) => (
               <div className="space-y-2">
-                <label
-                  htmlFor={field.name}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Additional Comments
-                </label>
-                <textarea
+                <FormLabel name={field.name} label="Additional comments" />
+                <FormInputArea
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  onChangeString={field.handleChange}
                 />
                 <FieldInfo field={field} />
               </div>
