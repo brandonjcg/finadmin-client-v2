@@ -22,7 +22,7 @@ export const FormInput = ({
   const onChangeByType = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (type) {
       case 'number':
-        onChangeNumber?.(Number(e.target.value));
+        onChangeNumber?.(+e.target.value);
         break;
       case 'checkbox':
         onChangeBoolean?.(e.target.checked);
@@ -32,6 +32,10 @@ export const FormInput = ({
     }
   };
 
+  const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (type === 'number' && e.target.value === '0') e.target.value = '';
+  };
+
   return (
     <input
       type={type}
@@ -39,6 +43,7 @@ export const FormInput = ({
       name={name}
       value={value}
       onBlur={onBlur}
+      onFocus={onFocus}
       onChange={onChangeByType}
       className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
     />

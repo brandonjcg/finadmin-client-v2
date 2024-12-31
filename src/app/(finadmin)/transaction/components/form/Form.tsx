@@ -4,13 +4,18 @@ import { useRouter } from 'next/navigation';
 import { standardSchemaValidator, useForm } from '@tanstack/react-form';
 import { toast } from 'react-toastify';
 import { createRow } from '@/actions';
+import { useGetSelect } from '@/hooks';
 import { transactionSchema } from '@/schemas';
 import { FieldInfo } from '../validators';
 import { FormLabel } from './FormLabel';
 import { FormInput, FormInputArea } from './FormInputs';
+import { FormSelect } from './FormSelect';
 
 export const Form = () => {
   const router = useRouter();
+  const { rows: banks } = useGetSelect({ url: 'bank/select' });
+  const { rows: stores } = useGetSelect({ url: 'transaction/store/select' });
+
   const form = useForm({
     defaultValues: {
       bank: '',
@@ -54,11 +59,10 @@ export const Form = () => {
             {(field) => (
               <div className="space-y-2">
                 <FormLabel name={field.name} label="Bank" />
-                <FormInput
+                <FormSelect
                   name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChangeString={field.handleChange}
+                  onChange={field.handleChange}
+                  options={banks}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -84,11 +88,11 @@ export const Form = () => {
             {(field) => (
               <div className="space-y-2">
                 <FormLabel name={field.name} label="Store" />
-                <FormInput
+                <FormSelect
                   name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChangeString={field.handleChange}
+                  onChange={field.handleChange}
+                  options={stores}
+                  optionKey="text"
                 />
                 <FieldInfo field={field} />
               </div>
