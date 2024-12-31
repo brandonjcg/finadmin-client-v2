@@ -1,20 +1,25 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
+import {
+  ReadonlyURLSearchParams,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
 import {
   ColumnDef,
   getCoreRowModel,
   getSortedRowModel,
+  Row,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
 import { getData } from '@/actions';
+import { IInfo } from '@/interfaces';
 import { TableRowEmpty } from './TableRowEmpty';
 import { TableRow } from './TableRow';
 import { TableHeader } from './TableHeader';
 import { TablePagination } from './TablePagination';
-import { IInfo } from '@/interfaces';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,6 +42,7 @@ export function DataTable<TData, TValue>({
   columns,
   endpoint,
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const pageParam = Number(searchParams?.get('page')) || 1;
   const totalPagesParam = Number(searchParams?.get('total')) || 10;
@@ -61,6 +67,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    getRowId: (row: TData) => (row as { _id: string })._id,
     state: {
       sorting,
     },
@@ -83,6 +90,9 @@ export function DataTable<TData, TValue>({
     fetchData();
   }, [endpoint, filterParams, page, totalPagesParam]);
 
+  const handleRowClick = (row: Row<TData>) =>
+    router.push(`${endpoint}/${row.id}`);
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse bg-gray-800 text-left text-sm text-gray-300">
@@ -95,7 +105,13 @@ export function DataTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table
               .getRowModel()
-              .rows.map((row) => <TableRow key={row.id} row={row} />)
+              .rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  row={row}
+                  onClick={() => handleRowClick(row)}
+                />
+              ))
           ) : (
             <TableRowEmpty rowsCount={columns.length} />
           )}
