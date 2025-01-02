@@ -1,3 +1,5 @@
+import { Form } from '../components';
+
 interface Props {
   params: {
     id: string;
@@ -8,7 +10,8 @@ export default function TransactionPage({ params }: Props) {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-5">Transactions by {id}</h1>
+      <h1 className="text-2xl font-bold mb-5">Transactions {id}</h1>
+      <Form id={id} />
     </>
   );
 }

@@ -7,11 +7,19 @@ interface Props {
   onChange: (value: string) => void;
   options: IOption[];
   optionKey?: keyof IOption;
+  value?: string;
 }
 
-export const FormSelect = ({ onChange, options, optionKey = '_id' }: Props) => {
+export const FormSelect = ({
+  onChange,
+  options,
+  optionKey = '_id',
+  value,
+}: Props) => {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => setIsMounted(true), []);
+
+  const selectedOption = options.find((option) => option[optionKey] === value);
 
   return isMounted ? (
     <CreatableSelect
@@ -24,6 +32,19 @@ export const FormSelect = ({ onChange, options, optionKey = '_id' }: Props) => {
         value: option[optionKey],
         label: option.text,
       }))}
+      value={
+        selectedOption
+          ? {
+              key: selectedOption[optionKey],
+              value: selectedOption[optionKey],
+              label: selectedOption.text,
+            }
+          : {
+              key: value,
+              value: value,
+              label: value,
+            }
+      }
       onChange={(selectedOption) => {
         const valueToSet =
           (selectedOption?.key ? selectedOption?.key : selectedOption?.label) ||

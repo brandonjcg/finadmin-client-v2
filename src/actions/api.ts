@@ -28,8 +28,8 @@ export const getData = async <T>({
 }: {
   url: string;
   cache?: RequestCache;
-}): Promise<IResponseApi<T[]>> => {
-  return fetchData<T[]>({
+}): Promise<IResponseApi<T>> => {
+  return fetchData<T>({
     url,
     options: {
       method: 'GET',
@@ -52,6 +52,28 @@ export const createRow = async <T>({
     url,
     options: {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${TEMPORAL_TOKEN}`,
+      },
+      body: JSON.stringify(body),
+    },
+  });
+};
+
+export const updateRow = async <T>({
+  url,
+  id,
+  body,
+}: {
+  url: string;
+  id: string;
+  body: T;
+}): Promise<IResponseApi<T>> => {
+  return fetchData<T>({
+    url: `${url}/${id}`,
+    options: {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${TEMPORAL_TOKEN}`,

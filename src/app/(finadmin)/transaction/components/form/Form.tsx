@@ -1,17 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { standardSchemaValidator, useForm } from '@tanstack/react-form';
 import { toast } from 'react-toastify';
-import { createRow } from '@/actions';
+import { createRow, getData, updateRow } from '@/actions';
 import { useGetSelect } from '@/hooks';
 import { transactionSchema } from '@/schemas';
 import { FieldInfo } from '../validators';
 import { FormLabel } from './FormLabel';
 import { FormInput, FormInputArea } from './FormInputs';
 import { FormSelect } from './FormSelect';
+import { ITransactionById } from '@/interfaces';
 
-export const Form = () => {
+export const Form = ({ id }: { id?: string }) => {
   const router = useRouter();
   const { rows: banks } = useGetSelect({ url: 'bank/select' });
   const { rows: stores } = useGetSelect({ url: 'transaction/store/select' });
@@ -28,10 +30,9 @@ export const Form = () => {
       additionalComments: '',
     },
     onSubmit: async ({ value: body }) => {
-      const response = await createRow({
-        url: 'transaction',
-        body,
-      });
+      const response = id
+        ? await updateRow({ url: 'transaction', id, body })
+        : await createRow({ url: 'transaction', body });
       if (response.error)
         return response.message.forEach((message) => toast.error(message));
 
@@ -44,6 +45,32 @@ export const Form = () => {
       onChange: transactionSchema,
     },
   });
+
+  useEffect(() => {
+    if (id) {
+      const fetchDataById = async () => {
+        const response = await getData<ITransactionById>({
+          url: `transaction/${id}`,
+        });
+
+        if (response.error)
+          return response.message.forEach((message) => toast.error(message));
+
+        form.reset({
+          bank: response.data.bank,
+          concept: response.data.concept,
+          store: response.data.store,
+          amount: response.data.amount,
+          date: response.data.date,
+          isReserved: response.data.isReserved,
+          isPaid: response.data.isPaid,
+          additionalComments: response.data.additionalComments,
+        });
+      };
+
+      fetchDataById();
+    }
+  }, [form, id]);
 
   return (
     <div className="bg-gray-800 dark:text-white p-5">
@@ -62,6 +89,7 @@ export const Form = () => {
                 <FormSelect
                   name={field.name}
                   onChange={field.handleChange}
+                  value={field.state.value}
                   options={banks}
                 />
                 <FieldInfo field={field} />
@@ -92,6 +120,7 @@ export const Form = () => {
                   name={field.name}
                   onChange={field.handleChange}
                   options={stores}
+                  value={field.state.value}
                   optionKey="text"
                 />
                 <FieldInfo field={field} />
@@ -149,7 +178,7 @@ export const Form = () => {
           <form.Field name="isPaid">
             {(field) => (
               <div className="space-y-2">
-                <FormLabel name={field.name} label="Is pais?" />
+                <FormLabel name={field.name} label="Is paid?" />
                 <FormInput
                   type="checkbox"
                   name={field.name}
