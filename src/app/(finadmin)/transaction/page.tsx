@@ -37,9 +37,15 @@ export default function TransactionPage() {
   return (
     <>
       <h1 className="text-2xl font-bold mb-5">Transactions</h1>
-      <SelectBanks label="Bank" endpoint={'bank'} paramName={'filters[bank]'} />
-      <CheckboxFlag name="isPaid" label="Is paid?" />
-      <CheckboxFlag name="isReserved" label="Is reserved?" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+        <SelectBanks
+          label="Bank"
+          endpoint={'bank'}
+          paramName={'filters[bank]'}
+        />
+        <CheckboxFlag name="isPaid" label="Is paid?" />
+        <CheckboxFlag name="isReserved" label="Is reserved?" />
+      </div>
       <DataTable columns={columns} endpoint={'transaction'} />
     </>
   );

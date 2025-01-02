@@ -69,11 +69,9 @@ export const SelectBanks = ({
   };
 
   return (
-    <div
-      className="relative inline-block text-left w-full mb-5"
-      ref={dropdownRef}
-    >
-      <div>
+    <div ref={dropdownRef}>
+      <div className="flex items-center space-x-2">
+        <label className="text-white font-bold">{label}</label>
         <button
           type="button"
           className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-300 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
