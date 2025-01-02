@@ -87,7 +87,7 @@ export const SelectBanks = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-full rounded-md shadow-lg bg-gray-300">
+        <div className="absolute z-10 mt-2 w-full rounded-md shadow-lg bg-gray-300 dark:bg-gray-800">
           <div className="py-1 max-h-60 overflow-auto" role="menu">
             {data.map((option) => (
               <SelectBankItem
