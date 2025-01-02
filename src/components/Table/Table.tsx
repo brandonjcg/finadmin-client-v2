@@ -82,7 +82,7 @@ export function DataTable<TData, TValue>({
       }).toString();
 
       const fullUrl = `${endpoint}?${queryString}`;
-      const response = await getData<TData>({ url: fullUrl });
+      const response = await getData<TData[]>({ url: fullUrl });
       setData(response.data);
       setInfo(response.info);
     };

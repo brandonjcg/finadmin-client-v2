@@ -9,7 +9,7 @@ export const useGetSelect = ({ url }: { url: string }) => {
   useEffect(() => {
     const getRows = async () => {
       try {
-        const response = await getData<IOption>({
+        const response = await getData<IOption[]>({
           url,
           cache: 'force-cache',
         });

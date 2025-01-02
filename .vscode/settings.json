@@ -1,13 +1,13 @@
 {
-    "conventionalCommits.scopes": [
-        "app",
-        "layout",
-        "components",
-        "utils",
-        "interfaces",
-        "forms",
-        "modules",
-        "pages",
-        "router"
-    ]
+        "conventionalCommits.scopes": [
+                "app",
+                "layout",
+                "components",
+                "utils",
+                "interfaces",
+                "forms",
+                "modules",
+                "pages",
+                "router"
+        ]
 }

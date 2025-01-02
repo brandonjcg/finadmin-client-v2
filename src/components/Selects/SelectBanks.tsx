@@ -36,7 +36,7 @@ export const SelectBanks = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getData<IOption>({ url: `${endpoint}/select` });
+      const response = await getData<IOption[]>({ url: `${endpoint}/select` });
       if (!response.error) setData(response.data);
     };
 
