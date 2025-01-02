@@ -52,20 +52,35 @@ export const SidebarMenu = () => {
           />
         </div>
 
-        <SidebarMenuItem title="Profile" icon={<IoPersonOutline size={30} />} />
-        <SidebarMenuItem title="Login" icon={<IoLogInOutline size={30} />} />
+        <SidebarMenuItem
+          title="Profile"
+          icon={<IoPersonOutline size={30} />}
+          onClick={closeSidebarMenu}
+        />
+        <SidebarMenuItem
+          title="Login"
+          icon={<IoLogInOutline size={30} />}
+          onClick={closeSidebarMenu}
+        />
 
         <div className="w-full h-px bg-gray-200 my-10" />
 
         <SidebarMenuItem
           title="Dashboard"
           icon={<IoStatsChartOutline size={30} />}
+          onClick={closeSidebarMenu}
         />
         <SidebarMenuItem
           title="Transactions"
           icon={<IoWalletOutline size={30} />}
+          path="/transaction"
+          onClick={closeSidebarMenu}
         />
-        <SidebarMenuItem title="Totals" icon={<IoCashOutline size={30} />} />
+        <SidebarMenuItem
+          title="Totals"
+          icon={<IoCashOutline size={30} />}
+          onClick={closeSidebarMenu}
+        />
       </nav>
     </div>
   );

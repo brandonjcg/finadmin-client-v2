@@ -1,7 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { DataTable } from '@/components';
+import { DataTable, SelectBanks } from '@/components';
 import { ITransaction } from '@/interfaces';
-import { getData } from '@/actions';
 
 const columns: ColumnDef<ITransaction>[] = [
   {
@@ -34,13 +33,12 @@ const columns: ColumnDef<ITransaction>[] = [
   },
 ];
 
-export default async function TransactionPage() {
-  const response = await getData<ITransaction>({ url: 'transaction' });
-
+export default function TransactionPage() {
   return (
     <>
       <h1 className="text-2xl font-bold mb-5">Transactions</h1>
-      <DataTable columns={columns} data={response.data} />
+      <SelectBanks label="Bank" endpoint={'bank'} paramName={'filters[bank]'} />
+      <DataTable columns={columns} endpoint={'transaction'} />
     </>
   );
 }
