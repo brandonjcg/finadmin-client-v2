@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { DataTable, SelectBanks } from '@/components';
+import { CheckboxFlag, DataTable, SelectBanks } from '@/components';
 import { ITransaction } from '@/interfaces';
 
 const columns: ColumnDef<ITransaction>[] = [
@@ -38,6 +38,8 @@ export default function TransactionPage() {
     <>
       <h1 className="text-2xl font-bold mb-5">Transactions</h1>
       <SelectBanks label="Bank" endpoint={'bank'} paramName={'filters[bank]'} />
+      <CheckboxFlag name="isPaid" label="Is paid?" />
+      <CheckboxFlag name="isReserved" label="Is reserved?" />
       <DataTable columns={columns} endpoint={'transaction'} />
     </>
   );
