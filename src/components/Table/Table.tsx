@@ -16,6 +16,7 @@ import {
 } from '@tanstack/react-table';
 import { getData } from '@/actions';
 import { IInfo } from '@/interfaces';
+import { PREFIX_FILTERS } from '@/constants';
 import { TableRowEmpty } from './TableRowEmpty';
 import { TableRow } from './TableRow';
 import { TableHeader } from './TableHeader';
@@ -30,9 +31,8 @@ const getFilterParams = (searchParams: ReadonlyURLSearchParams) => {
   const filterParams: Record<string, string> = {};
 
   searchParams.forEach((value, key) => {
-    if (key.startsWith('filters[') && key.endsWith(']')) {
+    if (key.startsWith(`${PREFIX_FILTERS}[`) && key.endsWith(']'))
       filterParams[key] = value;
-    }
   });
 
   return filterParams;

@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { CheckboxFlag, DataTable, SelectBanks } from '@/components';
 import { ITransaction } from '@/interfaces';
+import { PREFIX_FILTERS } from '@/constants';
 
 const columns: ColumnDef<ITransaction>[] = [
   {
@@ -41,7 +42,7 @@ export default function TransactionPage() {
         <SelectBanks
           label="Bank"
           endpoint={'bank'}
-          paramName={'filters[bank]'}
+          paramName={`${PREFIX_FILTERS}[bank]`}
         />
         <CheckboxFlag name="isPaid" label="Is paid?" />
         <CheckboxFlag name="isReserved" label="Is reserved?" />
