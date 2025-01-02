@@ -36,7 +36,10 @@ export const SelectBanks = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getData<IOption[]>({ url: `${endpoint}/select` });
+      const response = await getData<IOption[]>({
+        url: `${endpoint}/select`,
+        cache: 'force-cache',
+      });
       if (!response.error) setData(response.data);
     };
 
@@ -69,11 +72,9 @@ export const SelectBanks = ({
   };
 
   return (
-    <div
-      className="relative inline-block text-left w-full mb-5"
-      ref={dropdownRef}
-    >
-      <div>
+    <div ref={dropdownRef}>
+      <div className="flex items-center space-x-2">
+        <label className="text-white font-bold">{label}</label>
         <button
           type="button"
           className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-300 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -87,7 +88,7 @@ export const SelectBanks = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-full rounded-md shadow-lg bg-gray-300">
+        <div className="absolute z-10 mt-2 w-full rounded-md shadow-lg bg-gray-300 dark:bg-gray-800">
           <div className="py-1 max-h-60 overflow-auto" role="menu">
             {data.map((option) => (
               <SelectBankItem

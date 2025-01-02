@@ -1,3 +1,4 @@
+export * from './Checkboxes';
 export * from './Footer';
 export * from './Selects';
 export * from './SidebarMenu';
