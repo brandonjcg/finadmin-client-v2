@@ -21,3 +21,8 @@ export interface IOption {
   text: string;
   logo?: string;
 }
+
+export interface ITotalByBanks {
+  _id: string;
+  total: number;
+}
